@@ -1,0 +1,67 @@
+nav {
+    display: flex;
+    align-items: row;
+    justify-content: space-between;
+    padding-right: 2em;
+    padding-left: 2em;
+    background-color: #424242;
+    /* padding: 1em; */
+}
+
+nav>section {
+    display: flex;
+    width: 100%;
+}
+
+nav>section:first-child {
+    justify-content: left;
+    gap: 2em;
+}
+
+nav>section:last-child {
+    justify-content: right;
+    gap: 2em;
+}
+
+nav>section>div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-right: 1em;
+    padding-left: 1em;
+    padding: 0.8em;
+    max-width: 8vw;
+    min-width: 7vw;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    border-radius: 10%;
+    color: #E0E0E0;
+    /* margin-bottom: 2em; */
+}
+
+nav>section>div:hover:not(.active, .addPlant, .aloego) {
+    cursor: pointer;
+    background-color: #616161;
+    color: white;
+}
+
+.active {
+    color: white;
+    background-color: #212121;
+    cursor: pointer;
+}
+
+.addPlant {
+    background-color: #40ebe8;
+    cursor: pointer;
+    color: black;
+}
+
+.aloego {
+    background-color: white;
+    cursor: pointer;
+}
+
+#logo {
+    width: 100%;
+}
