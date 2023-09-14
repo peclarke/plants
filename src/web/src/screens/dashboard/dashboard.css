@@ -1,0 +1,10 @@
+.dashboard {
+    margin: 1vw;
+}
+
+.featurePlants {
+    display: grid;
+    grid-template-columns: repeat(4, 25vw);
+    width: 100%;
+    row-gap: 1vh;
+}

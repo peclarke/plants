@@ -1,18 +1,22 @@
+import { useNavigate } from 'react-router-dom';
 import './nav.css';
-// import logo from 'public/logo.png';
-import logo from '../../assets/head.png';
+
+
 
 const NavComponent = () => {
+    
+    const nav = useNavigate();
+
     return (
         <nav>
             <section>
-                <div className="aloego">
-                    <img src={logo} id="logo"/>
-                </div>
-                <div className="active">
+                {/* <div className="aloego"> */}
+                    {/* <img src={logo} id="logo"/> */}
+                {/* </div> */}
+                <div className="active" onClick={() => nav("/")}>
                     Home
                 </div>
-                <div>
+                <div onClick={() => nav("/plants")}>
                     Your Plants 
                 </div>
                 <div>
@@ -23,7 +27,7 @@ const NavComponent = () => {
                 </div>  
             </section>
             <section>
-                <div className="addPlant">
+                <div className="addPlant" onClick={() => nav("/add")}>
                     New Plant +
                 </div>
                 <div>
