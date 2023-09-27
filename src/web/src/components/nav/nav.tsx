@@ -1,6 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-import './nav.css';
+import { Button } from '@mui/joy';
+import Add from '@mui/icons-material/Add';
 
+import './nav.css';
 
 
 const NavComponent = () => {
@@ -26,10 +28,21 @@ const NavComponent = () => {
                     Tab 
                 </div>  
             </section>
-            <section>
-                <div className="addPlant" onClick={() => nav("/add")}>
+            <section style={{
+                display: "flex",
+                alignItems: "center"
+            }}>
+                {/* <div className="addPlant" onClick={() => nav("/add")}>
                     New Plant +
-                </div>
+                </div> */}
+                <Button 
+                    variant="solid" 
+                    startDecorator={<Add />} 
+                    onClick={() => nav("/add")}
+                    size="md"
+                >
+                    Add Plant
+                </Button>
                 <div>
                     Profile
                 </div>

@@ -1,5 +1,6 @@
 .dashboard {
-    margin: 1vw;
+    /* margin: 1vw; */
+    /* overflow-y: hidden; */
 }
 
 .featurePlants {
@@ -8,3 +9,7 @@
     width: 100%;
     row-gap: 1vh;
 }
+
+body::-webkit-scrollbar{
+    display: none;
+  }
