@@ -71,3 +71,11 @@ nav>section>div:hover:not(.active, .addPlant, .aloego) {
     /* height: 50vh; */
     /* height: 100%; */
 }
+
+.navbtn>.MuiTypography-variantPlain {
+    color: rgb(230, 230, 230);
+}
+
+.navbtn:hover>.MuiTypography-variantPlain {
+    color: black;
+}

@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { Button } from '@mui/joy';
+import { Button, Typography } from '@mui/joy';
 import Add from '@mui/icons-material/Add';
 
 import './nav.css';
@@ -11,16 +11,38 @@ const NavComponent = () => {
 
     return (
         <nav>
-            <section>
+            <section style={{
+                display: "flex",
+                alignItems: "center"
+            }}>
                 {/* <div className="aloego"> */}
                     {/* <img src={logo} id="logo"/> */}
                 {/* </div> */}
-                <div className="active" onClick={() => nav("/")}>
+                {/* <div className="active" onClick={() => nav("/")}>
                     Home
-                </div>
-                <div onClick={() => nav("/plants")}>
-                    Your Plants 
-                </div>
+                </div> */}
+                <Button 
+                    variant="outlined"
+                    color="neutral" 
+                    onClick={() => nav("/")}
+                    size="md"
+                    className="navbtn"
+                >
+                    <Typography variant="plain">
+                        Home
+                    </Typography>
+                </Button>
+                <Button 
+                    variant="outlined"
+                    color="neutral" 
+                    onClick={() => nav("/plants")}
+                    size="md"
+                    className="navbtn"
+                >
+                    <Typography variant="plain">
+                        Your Plants
+                    </Typography>
+                </Button>
                 <div>
                     Tab 
                 </div>
