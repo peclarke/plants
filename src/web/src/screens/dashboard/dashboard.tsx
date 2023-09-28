@@ -9,8 +9,13 @@ import { useEffect, useState } from 'react';
 const DashboardScreen = () => {
     // get plants
     const [plants, setPlants] = useState<any[]>([]);
+    const [needWatering, setNeedWatering] = useState<number>(0);
     useEffect(() => {
-        get_plant_information().then(ps => setPlants(ps));
+        get_plant_information().then(ps => {
+            setPlants(ps);
+            const needwatering = ps.filter(p => p.needsWatering).length
+            setNeedWatering(needwatering);
+    }); 
     }, [])
 
     return (
@@ -21,10 +26,10 @@ const DashboardScreen = () => {
                 </Typography>
                 <Grid container spacing={3} sx={{ flexGrow: 1, paddingTop: "2vh" }}>
                     <Grid xs={3} spacing={3}>
-                        <PlantNumbers number={plants.length}/>
+                        <PlantNumbers total={plants.length}/>
                     </Grid>
                     <Grid xs={3} spacing={3}>
-                        <CriticalPlants />
+                        <CriticalPlants total={plants.length} watering={needWatering}/>
                     </Grid>
                 </Grid>
             </Sheet>
@@ -40,6 +45,7 @@ const MyPlants = (props: { plants: any[]}) => {
                 props.plants.map(plant => {
                     return <Grid xs={3} key={"dsbitem-"+plant.id}>
                         <PlantCard 
+                            id={plant.id}
                             name={plant.name} 
                             type={plant.common_name} 
                             lastWatered={plant.lastWatered ? plant.lastWatered.time : false} 

@@ -58,7 +58,7 @@ class Plant(DB.BASE):
             .filter(Activity.plantId == self.id) \
             .order_by(Activity.activityTime.desc()) \
             .first()
-        
+                
         if most_recent_watering is None:
             return False
         else:

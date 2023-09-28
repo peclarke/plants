@@ -1,7 +1,7 @@
 import { Card, CardContent, CircularProgress, Typography } from "@mui/joy"
 
 type PlantNumberType = {
-    number: number
+    total: number;
 }
 
 export const PlantNumbers = (props: PlantNumberType) => {
@@ -12,22 +12,24 @@ export const PlantNumbers = (props: PlantNumberType) => {
                 </CircularProgress>
                 <CardContent>
                 <Typography level="body-md">Number of Plants</Typography>
-                <Typography level="h2">{props.number} {props.number === 1 ? "Plant" : "Plants"}</Typography>
+                <Typography level="h2">{props.total} {props.total === 1 ? "Plant" : "Plants"}</Typography>
                 </CardContent>
             </CardContent>
         </Card>
     )
 }
 
-export const CriticalPlants = () => {
+export const CriticalPlants = (props: { total: number, watering: number}) => {
+    const value = props.watering / props.total * 100;
+
     return (
         <Card variant="solid" color="danger" invertedColors>
             <CardContent orientation="horizontal">
-                <CircularProgress size="lg" determinate value={20}>
+                <CircularProgress size="lg" determinate value={value}>
                 </CircularProgress>
                 <CardContent>
                 <Typography level="body-md">Need Watering</Typography>
-                <Typography level="h2">0 Plants</Typography>
+                <Typography level="h2">{props.watering} {props.watering === 1 ? "Plant" : "Plants"}</Typography>
                 </CardContent>
             </CardContent>
         </Card>
