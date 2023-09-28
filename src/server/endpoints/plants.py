@@ -57,7 +57,7 @@ def update_plant(session):
     except Exception as e:
         return f"A database error occurred: {e}", 500
 
-    return plant.serialize(), 200
+    return plant.serialize(session), 200
 
 '''
 Adds a PERSONAL plant. (POST)
@@ -131,7 +131,7 @@ def add_personal_plant(session):
     except Exception as e:
         return "A database error occurred:", e, 400
 
-    return plant.serialize(), 200
+    return plant.serialize(session), 200
 
 '''
 Gets a PERSONAL Plant (GET)
@@ -150,7 +150,7 @@ def get_personal_plant(session, id: str):
         return "The requested plant does not exist", 400
 
     # return information about the plant
-    return plant.serialize(), 200
+    return plant.serialize(session), 200
 
 '''
 Deletes a PERSONAL Plant (DELETE)

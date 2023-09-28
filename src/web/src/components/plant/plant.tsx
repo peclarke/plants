@@ -4,7 +4,7 @@ import './plant.css';
 export type PlantCardProps = {
     name: string;
     type: string;
-    lastWatered: Date;
+    lastWatered: string | boolean;
     needsWatering: boolean;
 }
 
@@ -44,13 +44,37 @@ const PlantCard = (props: PlantCardProps) => {
                     Last watered:
                 </Typography>
                 <Typography level="body-xs" fontWeight="lg" textColor="text.secondary">
-                    1 hour ago
+                    {props.lastWatered === false ? "Never" : format_last_watered(props.lastWatered as string)}
                 </Typography>
             </div>
           </CardContent>
         </CardOverflow>
       </Card>
     )
+}
+
+const format_last_watered = (time: string) => {
+  // console.log(time)
+  const old: any = new Date(time);
+  const current: any = new Date();
+
+  const hours = Math.abs(current - old) / 36e5;
+  const days  = Math.round((current - old) / (1000 * 60 * 60 * 24));
+  const months = (current.getFullYear() - old.getFullYear()) * 12;
+
+  if (months === 1) {
+    return "1 month ago";
+  } else if (months > 1) {
+    return months + " months ago";
+  } else if (hours === 24) {
+    return "1 day ago";
+  } else if (hours > 24) {
+    return days + " days ago";
+  } else if (hours === 1) {
+    return "1 hour ago";
+  } else {
+    return hours + " hours ago";
+  }
 }
 
 export default PlantCard;

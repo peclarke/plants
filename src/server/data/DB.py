@@ -3,11 +3,12 @@ from sqlalchemy import create_engine, MetaData
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy_utils import database_exists, create_database
 from sqlalchemy.orm import sessionmaker
+import pymysql
 
 
 # potentially do dot env stuff here, but it's less important since security issues aren't in scope for DECO3801
 
-DBM = "mysql"
+DBM = "mysql+pymysql" #"mysql"
 HST = "localhost"
 DTB = "plants"
 USR = "root"

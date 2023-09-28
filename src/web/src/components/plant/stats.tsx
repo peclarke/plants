@@ -1,4 +1,4 @@
-import { Card, CardContent, CircularProgress, SvgIcon, Typography, CardActions, Button } from "@mui/joy"
+import { Card, CardContent, CircularProgress, Typography } from "@mui/joy"
 
 type PlantNumberType = {
     number: number
@@ -12,7 +12,7 @@ export const PlantNumbers = (props: PlantNumberType) => {
                 </CircularProgress>
                 <CardContent>
                 <Typography level="body-md">Number of Plants</Typography>
-                <Typography level="h2">{props.number} Plants</Typography>
+                <Typography level="h2">{props.number} {props.number === 1 ? "Plant" : "Plants"}</Typography>
                 </CardContent>
             </CardContent>
         </Card>

@@ -51,21 +51,18 @@ class Plant(DB.BASE):
     def get_serialized_tags(self):
         allTags = [tag.serialize() for tag in self.tags]
         return allTags
-
-    def serialize(self):
-        return {
-            "id":              self.id,
-            "name":            self.plantName,
-            "common_name":     self.plantType.commonName,
-            "scientific_name": self.plantType.fullName,
-            "description":     self.plantDesc,
-            "plantTypeId":     self.plantTypeId,
-            "user":            self.user.snip_serialize(),
-            "activities":      self.get_serialized_activities(),
-            "careProfile":     self.careProfile.serialize(),
-            "tags":            self.plantType.get_serialized_tags(),
-            "photos":          self.get_serialized_photos() 
-        }
+    
+    def last_watered(self, session):
+        most_recent_watering: Activity = session.query(Activity) \
+            .filter(Activity.activityTypeId == 1) \
+            .filter(Activity.plantId == self.id) \
+            .order_by(Activity.activityTime.desc()) \
+            .first()
+        
+        if most_recent_watering is None:
+            return False
+        else:
+            return most_recent_watering.serialize()
 
     def needs_watering(self, session):
         # Watering's activitytype id is 1 in the database
@@ -84,3 +81,20 @@ class Plant(DB.BASE):
         days_since_water: int = delta.days
 
         return days_since_water >= target_watering_time
+    
+    def serialize(self, session="*"):
+        return {
+            "id":              self.id,
+            "name":            self.plantName,
+            "common_name":     self.plantType.commonName,
+            "scientific_name": self.plantType.fullName,
+            "description":     self.plantDesc,
+            "plantTypeId":     self.plantTypeId,
+            "user":            self.user.snip_serialize(),
+            "activities":      self.get_serialized_activities(),
+            "careProfile":     self.careProfile.serialize(),
+            "tags":            self.plantType.get_serialized_tags(),
+            "photos":          self.get_serialized_photos(),
+            "needsWatering":   self.needs_watering(session) if session != "*" else False,
+            "lastWatered":     self.last_watered(session)
+        }

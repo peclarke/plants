@@ -9,6 +9,10 @@ const NavComponent = () => {
     
     const nav = useNavigate();
 
+    // check if authenticated TODO
+
+
+    // return (<></>)
     return (
         <nav>
             <section style={{

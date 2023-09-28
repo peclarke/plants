@@ -12,6 +12,9 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import NavComponent from './components/nav/nav.tsx';
+import JoySignInSideTemplate from './screens/auth/login.tsx';
+import Register from './screens/auth/register.tsx';
+import { ErrorEl } from './components/error.tsx';
 
 const NavBarWrapper = () => {
   return (
@@ -22,22 +25,33 @@ const NavBarWrapper = () => {
   )
 }
 
+const AuthWrapper = ({children} : any) => {
+  return children;
+  return <JoySignInSideTemplate />;
+}
+
+
 const router = createBrowserRouter([
   {
     path: "/",
     element: <NavBarWrapper />,
+    errorElement: <ErrorEl />,
     children: [
       {
         path: "/",
-        element: <DashboardScreen />,
+        element:  <AuthWrapper><DashboardScreen /></AuthWrapper>,
       },
       {
         path: "/add",
-        element: <AddPlantScreen />
+        element:  <AuthWrapper><AddPlantScreen /></AuthWrapper>
       },
       {
         path: "/plants",
-        element: <ListPlantScreen />
+        element:  <AuthWrapper><ListPlantScreen /></AuthWrapper>
+      },
+      {
+        path: "/signup",
+        element: <Register />
       }
     ]
   }

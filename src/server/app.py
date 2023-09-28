@@ -1,10 +1,11 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS, cross_origin
 from endpoints import get_blueprints
 from data.DB import CONNECTION_STRING, SESSION
 
-import firebase_admin
-import os
+# import firebase_admin
+# import os
 from data import User, Plant, PlantType
 
 def create_app() -> Flask:
@@ -20,19 +21,22 @@ def create_app() -> Flask:
         app.register_blueprint(blueprint)
 
     db = SQLAlchemy(app)
-    db.init_app(app)
+    cors = CORS(app)
+    app.config['CORS_HEADERS'] = 'Content-Type'
+    # db.init_app(app)
 
     # Initialise firebase admin
-    dirname = os.path.dirname(__file__)
-    cred = firebase_admin.credentials.Certificate(os.path.join(dirname, "firebase_admin.json"))
-    fb_admin = firebase_admin.initialize_app(cred)
+    # dirname = os.path.dirname(__file__)
+    # cred = firebase_admin.credentials.Certificate(os.path.join(dirname, "firebase_admin.json"))
+    # fb_admin = firebase_admin.initialize_app(cred)
 
     return app
 
 # Initial setup
 app: Flask = create_app()
-db: SQLAlchemy = SQLAlchemy(app)
-db.init_app(app)
+
+# db: SQLAlchemy = SQLAlchemy(app)
+# db.init_app(app)
 
 @app.route("/")
 def root():
