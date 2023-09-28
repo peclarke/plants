@@ -5,6 +5,7 @@ nav {
     padding-right: 2em;
     padding-left: 1em;
     background-color: #424242;
+    min-height: 6vh;
     /* padding: 1em; */
 }
 
@@ -72,10 +73,11 @@ nav>section>div:hover:not(.active, .addPlant, .aloego) {
     /* height: 100%; */
 }
 
-.navbtn>.MuiTypography-variantPlain {
+.navbtn>.MuiTypography-variantPlain, .menuBtn {
     color: rgb(230, 230, 230);
 }
 
 .navbtn:hover>.MuiTypography-variantPlain {
     color: black;
 }
+

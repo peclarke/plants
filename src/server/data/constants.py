@@ -1,5 +1,6 @@
 # ==== SQLAlchemy Table Names ====
 TBL_USERS = 'users'
+TBL_AUTH = 'auth'
 TBL_PLANTS = 'plants'
 TBL_PLANT_TYPES = 'plant_types'
 TBL_PLANT_TAGS = 'plant_tags'

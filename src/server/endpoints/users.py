@@ -1,7 +1,8 @@
+import datetime
 from typing import List, Optional
 from flask import Blueprint,request
 from sqlalchemy import update
-from data import User
+from data import User, Auth
 import json
 from data.constants import TBL_USERS
 from data.users.token import Token
@@ -182,3 +183,37 @@ def add_token(session, username: str):
         return f"Error adding new token to database: {e}", 500
     
     return "Successfully added user token", 200
+
+# Authentication 
+
+'''
+Add user token
+    - Params:
+        -password: string
+'''
+@app.route("/auth", methods=["POST"])
+@APICall
+@api_auth
+def authenticate_user(session, username: str, password: str):
+    # check for password
+    psw: str = request.form["password"]
+    if psw is None:
+        return "Password not supplied", 400
+    # check for existing user
+    user: Auth = session.query(Auth).filter(Auth.username == username).first()
+    if user is None:
+        return "Username or password incorrect", 403
+    # lets play compare the password
+    match = user.check_password_match(psw)
+    if match:
+        # TODO: test this all actually works
+
+        userInfo = {
+            "username": user.authUser.username,
+            "startDate": user.authUser.startDate,
+            "tokenTime": str(datetime.datetime.now())
+        }
+
+        return userInfo, 200
+    else:
+        return "Username or password incorrect", 403

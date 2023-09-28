@@ -1,9 +1,9 @@
 import { useNavigate } from 'react-router-dom';
-import { Button, Typography } from '@mui/joy';
+import { Button, Dropdown, Menu, MenuButton, MenuItem, Typography } from '@mui/joy';
 import Add from '@mui/icons-material/Add';
-
+import { MoreVert } from '@mui/icons-material';
+import IconButton from '@mui/joy/IconButton';
 import './nav.css';
-
 
 const NavComponent = () => {
     
@@ -19,12 +19,6 @@ const NavComponent = () => {
                 display: "flex",
                 alignItems: "center"
             }}>
-                {/* <div className="aloego"> */}
-                    {/* <img src={logo} id="logo"/> */}
-                {/* </div> */}
-                {/* <div className="active" onClick={() => nav("/")}>
-                    Home
-                </div> */}
                 <Button 
                     variant="outlined"
                     color="neutral" 
@@ -47,20 +41,12 @@ const NavComponent = () => {
                         Your Plants
                     </Typography>
                 </Button>
-                <div>
-                    Tab 
-                </div>
-                <div>
-                    Tab 
-                </div>  
             </section>
             <section style={{
                 display: "flex",
-                alignItems: "center"
+                alignItems: "center",
+                paddingRight: "2em"
             }}>
-                {/* <div className="addPlant" onClick={() => nav("/add")}>
-                    New Plant +
-                </div> */}
                 <Button 
                     variant="solid" 
                     startDecorator={<Add />} 
@@ -69,9 +55,18 @@ const NavComponent = () => {
                 >
                     Add Plant
                 </Button>
-                <div>
-                    Profile
-                </div>
+                <Dropdown>
+                    <MenuButton
+                        slots={{ root: IconButton }}
+                        slotProps={{ root: { variant: 'solid', color: 'neutral' } }}
+                    >
+                        <MoreVert />
+                    </MenuButton>
+                    <Menu>
+                        <MenuItem>Profile</MenuItem>
+                        <MenuItem>Logout</MenuItem>
+                    </Menu>
+                </Dropdown>
             </section>
         </nav>
     )
