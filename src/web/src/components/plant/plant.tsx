@@ -2,7 +2,8 @@ import { AspectRatio, Button, Card, CardContent, CardOverflow, Divider, Typograp
 import DeleteIcon from '@mui/icons-material/Delete';
 import WarningRoundedIcon from '@mui/icons-material/WarningRounded';
 import './plant.css';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { StateContext } from '../../state/context';
 
 export type PlantCardProps = {
     id: number;
@@ -83,6 +84,8 @@ const PlantCard = (props: PlantCardProps) => {
 }
 
 const DeletePlantModal = (props: {open: boolean, setOpen: (val: boolean) => void, plantId: number}) => {
+  const { state, setState } = useContext(StateContext);
+
   const confirmDelete = () => {
 
     let formData = new FormData();
@@ -93,7 +96,11 @@ const DeletePlantModal = (props: {open: boolean, setOpen: (val: boolean) => void
         method: "DELETE",
         body: formData
       }
-    )
+    ).then(res => {
+      // when it's completed, delete it from state
+      const plants = state.plants.filter(plant => plant.id != props.plantId)
+      setState({...state, plants: plants})
+    })
   }
    
   return (
