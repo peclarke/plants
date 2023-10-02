@@ -4,15 +4,20 @@ import Grid from '@mui/joy/Grid';
 import './dashboard.css';
 import { Divider, Sheet, Typography } from '@mui/joy';
 import { PlantNumbers, CriticalPlants } from '../../components/plant/stats';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { StateContext } from '../../state/context';
 
 const DashboardScreen = () => {
+    const { state, setState } = useContext(StateContext);
+
     // get plants
-    const [plants, setPlants] = useState<any[]>([]);
     const [needWatering, setNeedWatering] = useState<number>(0);
     useEffect(() => {
-        get_plant_information().then(ps => {
-            setPlants(ps);
+        get_plant_information(state.username).then(ps => {
+            setState({
+                ...state,
+                plants: ps
+            })
             const needwatering = ps.filter(p => p.needsWatering).length
             setNeedWatering(needwatering);
     }); 
@@ -27,17 +32,14 @@ const DashboardScreen = () => {
                 <Divider sx={{mb: 2, mt: 2}}/>
                 <Grid container spacing={3} sx={{ flexGrow: 1, paddingTop: "2vh" }}>
                     <Grid xs={3} spacing={3}>
-                        <PlantNumbers total={plants.length}/>
+                        <PlantNumbers total={state.plants.length}/>
                     </Grid>
                     <Grid xs={3} spacing={3}>
-                        <CriticalPlants total={plants.length} watering={needWatering}/>
+                        <CriticalPlants total={state.plants.length} watering={needWatering}/>
                     </Grid>
-                    {/* <Grid xs={3} spacing={3}>
-                        <Divider orientation='vertical' />
-                    </Grid> */}
                 </Grid>
             </Sheet>
-            <MyPlants plants={plants}/>
+            <MyPlants plants={state.plants}/>
         </section>
     )
 }
@@ -62,8 +64,9 @@ const MyPlants = (props: { plants: any[]}) => {
     )
 }
 
-const get_plant_information: () => Promise<any[]> = async () => {
-    const result = await fetch("http://127.0.0.1:3000/users/ldoog0/plants");
+const get_plant_information: (usr: string) => Promise<any[]> = async (usr: string) => {
+
+    const result = await fetch("http://127.0.0.1:3000/users/"+usr+"/plants");
     if (result.ok) {
         const ids = await result.json();
         // get individual plant information

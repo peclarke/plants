@@ -1,9 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
 
 import DashboardScreen from './screens/dashboard/dashboard.tsx';
-import AddPlantScreen from './screens/add_plant/addplant.tsx';
 import ListPlantScreen from './screens/list_plant/listplant.tsx';
 
 import {
@@ -15,6 +14,7 @@ import NavComponent from './components/nav/nav.tsx';
 import JoySignInSideTemplate from './screens/auth/login.tsx';
 import Register from './screens/auth/register.tsx';
 import { ErrorEl } from './components/error.tsx';
+import { initialState, StateContext, StateType } from './state/context.ts';
 
 const NavBarWrapper = () => {
   return (
@@ -53,8 +53,20 @@ const router = createBrowserRouter([
   }
 ]);
 
+const PlantApp = () => {
+  const [state, setState] = useState<StateType>(initialState);
+  const value = { state, setState }
+  
+
+  return (
+    <StateContext.Provider value={value}>
+      <RouterProvider router={router} />
+    </StateContext.Provider>
+  )
+}
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <PlantApp />
   </React.StrictMode>,
 )

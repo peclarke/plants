@@ -4,10 +4,12 @@ import Add from '@mui/icons-material/Add';
 import { MoreVert } from '@mui/icons-material';
 import IconButton from '@mui/joy/IconButton';
 import './nav.css';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import InputFileUpload from '../file_input';
+import { StateContext } from '../../state/context';
 
 const NewPlantModal = (props: {open: boolean, setOpen: (val: boolean) => void}) => {
+    const { state, setState } = useContext(StateContext);
     const [types, setTypes] = useState([]);
 
     useEffect(() => {
@@ -21,7 +23,7 @@ const NewPlantModal = (props: {open: boolean, setOpen: (val: boolean) => void}) 
                         "id": pt.id
                     }
                 });
-                console.log(commonNames);
+                // console.log(commonNames);
                 setTypes(commonNames);
             }));
     }, [])
@@ -52,6 +54,24 @@ const NewPlantModal = (props: {open: boolean, setOpen: (val: boolean) => void}) 
                 fetch("http://127.0.0.1:3000/plant", {
                     method: "POST",
                     body: formData
+                }).then(_ => {
+                    // get plant information
+                    fetch("http://127.0.0.1:3000/users/"+state.username+"/plants")
+                        .then((info: any) => info.json()
+                        .then((out: number[]) => {
+                            const mostRecent = out[out.length - 1];
+                            fetch("http://127.0.0.1:3000/plant/"+mostRecent)
+                                .then((info: any) => info.json()
+                                .then((newInfo: any) => {
+                                    // update plants state
+                                    setState({
+                                        ...state,
+                                        plants: [...state.plants, newInfo]
+                                    })
+                                })
+                            )
+                        })
+                    )
                 })
 
                 }}
