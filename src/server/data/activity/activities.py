@@ -17,7 +17,7 @@ class Activity(DB.BASE):
     activityType = relationship("ActivityType", back_populates='activities')
 
     plantId = Column("plantId", Integer, ForeignKey(f"{TBL_PLANTS}.id", name=f"fk_plant_id_{__tablename__}"), nullable=False)
-    plant = relationship("Plant", back_populates='activities')
+    plant = relationship("Plant", back_populates='activities', cascade='all,delete')
 
     def __init__(self, time, activityTypeId, plantId):
         self.activityTypeId = activityTypeId

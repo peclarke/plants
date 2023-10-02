@@ -4,6 +4,10 @@ type PlantNumberType = {
     total: number;
 }
 
+export const Interactions = () => {
+    
+}
+
 export const PlantNumbers = (props: PlantNumberType) => {
     return (
         <Card variant="solid" color="primary" invertedColors>

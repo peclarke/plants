@@ -1,12 +1,11 @@
-.plantCard {
+/* .plantCard {
     background-color: white;
     border: 2px solid rgb(128, 128, 128, 0.2);
     padding: 1em;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    /* height: 10vh; */
-}
+} */
 
 @media only screen and (max-width: 1200px) {
     .plantCard {
@@ -34,4 +33,8 @@
 #needsWatering {
     /* display: block; */
     color: rgb(255, 0, 0, 0.9);
+}
+
+.MuiIconButton-variantSolid:hover {
+    opacity: 1;
 }

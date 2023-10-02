@@ -159,20 +159,23 @@ Deletes a PERSONAL Plant (DELETE)
     
     ASSUME THE USER IS DELETING THEIR AND NOT SOMEONE ELSES PLANT
 '''
-@app.route('/plants/delete', methods = ['DELETE'])
+@app.route('/plants/delete', methods=['DELETE'])
 @APICall
 @api_auth
 def delete_personal_plant(session):
+    # p: Plant = session.query(Plant).filter(Plant.id == id).first()
+    # session.delete(p)
+    # session.commit()
+    # return "Woohoo", 200
+
     try:
-        plantId: str = request.form['plantId']
+        plantId: int = int(request.form['plantId'])
     except KeyError:
         return "Invalid request parameters. Must include plantId: str", 400
-
-    # check it's in the DB
-    plant: Plant = session.query(Plant).filter(Plant.id == plantId).first()
+    plant: Plant = session.query(Plant).filter(Plant.id == int(plantId)).first()
     if not plant:
         return "Plant was not found", 400
-
+    
     # attempt a deletion
     try:
         session.delete(plant)

@@ -1,5 +1,8 @@
-import { AspectRatio, Button, Card, CardContent, CardOverflow, Divider, Typography } from '@mui/joy';
+import { AspectRatio, Button, Card, CardContent, CardOverflow, Divider, Typography, IconButton, Box, Modal, ModalDialog, DialogTitle, DialogContent, DialogActions } from '@mui/joy';
+import DeleteIcon from '@mui/icons-material/Delete';
+import WarningRoundedIcon from '@mui/icons-material/WarningRounded';
 import './plant.css';
+import { useState } from 'react';
 
 export type PlantCardProps = {
     id: number;
@@ -19,7 +22,11 @@ const example_pics = [
 ]
 
 const PlantCard = (props: PlantCardProps) => {
+  const [open, setOpen] = useState(false);
+
     return (
+      <>
+        <DeletePlantModal open={open} setOpen={setOpen} plantId={props.id}/>
         <Card variant="outlined" sx={{ width: "85%" }}>
         <CardOverflow>
           <AspectRatio ratio="2">
@@ -29,6 +36,17 @@ const PlantCard = (props: PlantCardProps) => {
               loading="lazy"
               alt=""
             />
+            <Box sx={{display: "flex", justifyContent: "right"}}>
+              <IconButton
+                size="sm"
+                variant="solid"
+                color="danger"
+                sx={{ m: 1, opacity: 0.4 }}
+                onClick={() => setOpen(true)}
+              >
+                <DeleteIcon />
+              </IconButton>
+            </Box>
           </AspectRatio>
         </CardOverflow>
         <CardContent>
@@ -60,7 +78,46 @@ const PlantCard = (props: PlantCardProps) => {
           </CardContent>
         </CardOverflow>
       </Card>
+      </>
     )
+}
+
+const DeletePlantModal = (props: {open: boolean, setOpen: (val: boolean) => void, plantId: number}) => {
+  const confirmDelete = () => {
+
+    let formData = new FormData();
+    formData.append('plantId', props.plantId.toString());
+    props.setOpen(false)
+
+    fetch("http://127.0.0.1:3000/plants/delete", {
+        method: "DELETE",
+        body: formData
+      }
+    )
+  }
+   
+  return (
+    <Modal open={props.open} onClose={() => props.setOpen(false)}>
+      <ModalDialog variant="outlined" role="alertdialog">
+        <DialogTitle>
+          <WarningRoundedIcon />
+          Confirmation
+        </DialogTitle>
+        <Divider />
+        <DialogContent>
+          Are you sure you want to delete this plant?
+        </DialogContent>
+        <DialogActions>
+          <Button variant="solid" color="danger" onClick={confirmDelete}>
+            Delete plant
+          </Button>
+          <Button variant="plain" color="neutral" onClick={() => props.setOpen(false)}>
+            Cancel
+          </Button>
+        </DialogActions>
+      </ModalDialog>
+    </Modal>
+  )
 }
 
 export const water_plant = (id: number) => {

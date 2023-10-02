@@ -42,10 +42,6 @@ const router = createBrowserRouter([
         element:  <AuthWrapper><DashboardScreen /></AuthWrapper>,
       },
       {
-        path: "/add",
-        element:  <AuthWrapper><AddPlantScreen /></AuthWrapper>
-      },
-      {
         path: "/plants",
         element:  <AuthWrapper><ListPlantScreen /></AuthWrapper>
       },

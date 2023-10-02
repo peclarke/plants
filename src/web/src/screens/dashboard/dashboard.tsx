@@ -2,7 +2,7 @@ import PlantCard from '../../components/plant/plant';
 import Grid from '@mui/joy/Grid';
 
 import './dashboard.css';
-import { Sheet, Typography } from '@mui/joy';
+import { Divider, Sheet, Typography } from '@mui/joy';
 import { PlantNumbers, CriticalPlants } from '../../components/plant/stats';
 import { useEffect, useState } from 'react';
 
@@ -24,6 +24,7 @@ const DashboardScreen = () => {
                 <Typography color="neutral" variant="plain" level="h1">
                     Dashboard
                 </Typography>
+                <Divider sx={{mb: 2, mt: 2}}/>
                 <Grid container spacing={3} sx={{ flexGrow: 1, paddingTop: "2vh" }}>
                     <Grid xs={3} spacing={3}>
                         <PlantNumbers total={plants.length}/>
@@ -31,6 +32,9 @@ const DashboardScreen = () => {
                     <Grid xs={3} spacing={3}>
                         <CriticalPlants total={plants.length} watering={needWatering}/>
                     </Grid>
+                    {/* <Grid xs={3} spacing={3}>
+                        <Divider orientation='vertical' />
+                    </Grid> */}
                 </Grid>
             </Sheet>
             <MyPlants plants={plants}/>

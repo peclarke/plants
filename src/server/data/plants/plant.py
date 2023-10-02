@@ -26,7 +26,7 @@ class Plant(DB.BASE):
     careProfile = relationship("PlantCareProfile", uselist=False, backref="plant_care_profile")
 
     # individual relationships
-    activities = relationship("Activity", back_populates='plant')
+    activities = relationship("Activity", back_populates='plant', cascade='all,delete')
     # tags = relationship("PlantTag", back_populates="plant") # access through plantType
 
     photos = relationship("Photo", back_populates="plant")
@@ -96,5 +96,5 @@ class Plant(DB.BASE):
             "tags":            self.plantType.get_serialized_tags(),
             "photos":          self.get_serialized_photos(),
             "needsWatering":   self.needs_watering(session) if session != "*" else False,
-            "lastWatered":     self.last_watered(session)
+            "lastWatered":     self.last_watered(session) if session != "*" else False
         }
