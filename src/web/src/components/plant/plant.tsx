@@ -96,7 +96,7 @@ const DeletePlantModal = (props: {open: boolean, setOpen: (val: boolean) => void
         method: "DELETE",
         body: formData
       }
-    ).then(res => {
+    ).then(_ => {
       // when it's completed, delete it from state
       const plants = state.plants.filter(plant => plant.id != props.plantId)
       setState({...state, plants: plants})

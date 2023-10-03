@@ -23,5 +23,5 @@ export const initialState = {
 
 export const StateContext = createContext<ContextType>({
     state: initialState,
-    setState: (state: StateType) => {}
+    setState: (_state: StateType) => {}
 });

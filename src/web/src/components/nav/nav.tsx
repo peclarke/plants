@@ -28,7 +28,12 @@ const NewPlantModal = (props: {open: boolean, setOpen: (val: boolean) => void}) 
             }));
     }, [])
 
-    const [form, setForm] = useState({
+    const [form, setForm] = useState<{
+        personal: any;
+        desc: any;
+        typeName: any;
+        type: any;
+    }>({
         personal: "",
         desc: "",
         typeName: "",
