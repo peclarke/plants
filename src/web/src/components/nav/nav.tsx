@@ -138,13 +138,15 @@ const NewPlantModal = (props: {open: boolean, setOpen: (val: boolean) => void}) 
 }
 
 const NavComponent = () => {
+    const { state } = useContext(StateContext);
     const [open, setOpen] = useState<boolean>(false);
     const nav = useNavigate();
 
-    // check if authenticated TODO
+    // don't render if not authenticated
+    if (!state.loggedIn) {
+        return <></>
+    }
 
-
-    // return (<></>)
     return (
         <>
         <NewPlantModal open={open} setOpen={setOpen} />

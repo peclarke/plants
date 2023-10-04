@@ -30,6 +30,12 @@ class Auth(DB.BASE):
         usrbytes = password.encode('utf-8')
         return bcrypt.checkpw(usrbytes, self.password)
     
+    def serialize(self):
+        return {
+            "usr": self.username,
+            "psw": self.password
+        }
+    
 
 def hash_password(password: str) -> bytes:
     bytes = password.encode('utf-8')

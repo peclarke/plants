@@ -15,6 +15,7 @@ import Stack from '@mui/joy/Stack';
 import DarkModeRoundedIcon from '@mui/icons-material/DarkModeRounded';
 import LightModeRoundedIcon from '@mui/icons-material/LightModeRounded';
 import YardIcon from '@mui/icons-material/Yard';
+import { useState } from 'react';
 
 /**
  * This is an open source template that has been used from the MUI Joy Library.
@@ -62,6 +63,10 @@ function ColorSchemeToggle({ onClick, ...props }: IconButtonProps) {
 }
 
 export default function Register() {
+  const [user, setUser] = useState("");
+  const [pass, setPass] = useState("");
+  const [loading, setLoading] = useState(false);
+
   return (
     <CssVarsProvider defaultMode="dark" disableTransitionOnChange>
       <CssBaseline />
@@ -155,11 +160,11 @@ export default function Register() {
           >
             <Stack gap={4} sx={{ mb: 2 }}>
               <Stack gap={1}>
-                <Typography level="h3">Sign in</Typography>
+                <Typography level="h3">Sign up</Typography>
                 <Typography level="body-sm">
-                  New to my app?{' '}
-                  <Link href="/signup" level="title-sm">
-                    Sign up!
+                  Already have an account?{' '}
+                  <Link href="/" level="title-sm">
+                    Log in!
                   </Link>
                 </Typography>
               </Stack>
@@ -181,26 +186,36 @@ export default function Register() {
               <form
                 onSubmit={(event: React.FormEvent<SignInFormElement>) => {
                   event.preventDefault();
-                  const formElements = event.currentTarget.elements;
-                  const data = {
-                    email: formElements.email.value,
-                    password: formElements.password.value,
-                    persistent: formElements.persistent.checked,
-                  };
-                  alert(JSON.stringify(data, null, 2));
+                  setLoading(true);
+
+                  let form = new FormData();
+                  form.append("username", user);
+                  form.append("password", pass);
+
+                  fetch("http://127.0.0.1:3000/register", {
+                    method: "POST",
+                    body: form
+                  }).then(res => res.json().then(data => {
+
+                    // more in here TODO
+                  })).finally(() => {
+
+                    // make sure we stop
+                    setLoading(false);
+                  })
                 }}
               >
                 <FormControl required>
                   <FormLabel>Email</FormLabel>
-                  <Input type="email" name="email" />
+                  <Input type="email" name="email" disabled={loading} value={user} onChange={(event: any) => setUser(event.target.value)}/>
                 </FormControl>
                 <FormControl required>
                   <FormLabel>Password</FormLabel>
-                  <Input type="password" name="password" />
+                  <Input type="password" name="password" disabled={loading} value={pass} onChange={(event: any) => setPass(event.target.value)}/>
                 </FormControl>
                 <Stack gap={4} sx={{ mt: 2 }}>
-                  <Button type="submit" fullWidth>
-                    Sign in
+                  <Button type="submit" fullWidth loading={loading}>
+                    Sign Up
                   </Button>
                 </Stack>
               </form>

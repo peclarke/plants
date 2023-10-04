@@ -206,8 +206,6 @@ def authenticate_user(session, username: str, password: str):
     # lets play compare the password
     match = user.check_password_match(psw)
     if match:
-        # TODO: test this all actually works
-
         userInfo = {
             "username": user.authUser.username,
             "startDate": user.authUser.startDate,
@@ -217,3 +215,34 @@ def authenticate_user(session, username: str, password: str):
         return userInfo, 200
     else:
         return "Username or password incorrect", 403
+    
+'''
+Register new user
+'''
+@app.route("/register", methods=["POST"])
+@APICall
+@api_auth
+def register_user(session):
+    usr: str = request.form["username"]
+    psw: str  = request.form["password"]
+
+    print(usr, psw)
+
+    if usr is None or psw is None:
+        return "Either username or password not supplied", 400
+    #check for existing user
+    userObj: Auth = session.query(Auth).filter(Auth.username == usr).first()
+    if userObj:
+        return "User already registered", 400
+    # username, email, bio=None, reputation=0, startDate=func.now()
+    user: User = User("username", usr)
+    # create the new user
+    newUser: Auth = Auth(usr, psw)
+    try:
+        session.add(user)
+        session.add(newUser)
+        session.commit()
+    except Exception as e:
+        return f"Something went wrong: {e}", 500
+    
+    return "User registered successfully", 200

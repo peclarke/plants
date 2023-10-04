@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
 
@@ -26,8 +26,13 @@ const NavBarWrapper = () => {
 }
 
 const AuthWrapper = ({children} : any) => {
-  return children;
-  return <JoySignInSideTemplate />;
+  const { state } = useContext(StateContext);
+  
+  if (state.loggedIn) {
+    return children
+  } else {
+    return <JoySignInSideTemplate />
+  }
 }
 
 

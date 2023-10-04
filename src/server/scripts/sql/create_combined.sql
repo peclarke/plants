@@ -16,6 +16,18 @@ CREATE TABLE `plant_types` (
   UNIQUE INDEX `username_UNIQUE` (`username` ASC),
   UNIQUE INDEX `email_UNIQUE` (`email` ASC));
 
+  CREATE TABLE `plants`.`auth` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `username` VARCHAR(255) NOT NULL,
+  `password` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `username_UNIQUE` (`username` ASC) VISIBLE,
+  CONSTRAINT `fk_user_auth_nameuser`
+    FOREIGN KEY (`username`)
+    REFERENCES `plants`.`users` (`email`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
 CREATE TABLE `plant_care_profile` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `soilType` VARCHAR(100) NOT NULL,
