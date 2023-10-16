@@ -15,6 +15,7 @@ import Stack from '@mui/joy/Stack';
 import DarkModeRoundedIcon from '@mui/icons-material/DarkModeRounded';
 import LightModeRoundedIcon from '@mui/icons-material/LightModeRounded';
 import YardIcon from '@mui/icons-material/Yard';
+import { baseUrl } from '../../utils';
 
 /**
  * This is an open source template that has been used from the MUI Joy Library.
@@ -192,7 +193,7 @@ export default function JoySignInSideTemplate() {
                   formData.append("username", email);
                   formData.append("password", pass);
 
-                  fetch("http://127.0.0.1:3000/auth", {
+                  fetch(baseUrl+"auth", {
                     method: "POST",
                     body: formData
                   }).then(((res: any) => res.json().then((data: any) => {

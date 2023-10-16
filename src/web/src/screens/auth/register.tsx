@@ -16,6 +16,7 @@ import DarkModeRoundedIcon from '@mui/icons-material/DarkModeRounded';
 import LightModeRoundedIcon from '@mui/icons-material/LightModeRounded';
 import YardIcon from '@mui/icons-material/Yard';
 import { useState } from 'react';
+import { baseUrl } from '../../utils';
 
 /**
  * This is an open source template that has been used from the MUI Joy Library.
@@ -192,7 +193,7 @@ export default function Register() {
                   form.append("username", user);
                   form.append("password", pass);
 
-                  fetch("http://127.0.0.1:3000/register", {
+                  fetch(baseUrl+"register", {
                     method: "POST",
                     body: form
                   }).then(res => res.json().then(data => {

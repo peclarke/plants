@@ -54,4 +54,4 @@ if __name__ == "__main__":
     # session.add_all([plantType, plant])
     # session.commit()
 
-    app.run(debug=False, port=3000)
+    app.run(debug=False, port=3000, host="0.0.0.0")

@@ -7,13 +7,14 @@ import './nav.css';
 import { useContext, useEffect, useState } from 'react';
 import InputFileUpload from '../file_input';
 import { StateContext } from '../../state/context';
+import { baseUrl } from '../../utils';
 
 const NewPlantModal = (props: {open: boolean, setOpen: (val: boolean) => void}) => {
     const { state, setState } = useContext(StateContext);
     const [types, setTypes] = useState([]);
 
     useEffect(() => {
-        fetch("http://127.0.0.1:3000/planttypes")
+        fetch(baseUrl+"planttypes")
             .then(res => res.json()
             .then(content => {
                 // console.log(content);
@@ -56,16 +57,16 @@ const NewPlantModal = (props: {open: boolean, setOpen: (val: boolean) => void}) 
                 formData.append('userId', "1"); // TODO TAKE FROM STATE
                 formData.append('plantTypeId', form.type.id)
                 
-                fetch("http://127.0.0.1:3000/plant", {
+                fetch(baseUrl+"plant", {
                     method: "POST",
                     body: formData
                 }).then(_ => {
                     // get plant information
-                    fetch("http://127.0.0.1:3000/users/"+state.username+"/plants")
+                    fetch(baseUrl+"users/"+state.username+"/plants")
                         .then((info: any) => info.json()
                         .then((out: number[]) => {
                             const mostRecent = out[out.length - 1];
-                            fetch("http://127.0.0.1:3000/plant/"+mostRecent)
+                            fetch(baseUrl+"plant/"+mostRecent)
                                 .then((info: any) => info.json()
                                 .then((newInfo: any) => {
                                     // update plants state

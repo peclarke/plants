@@ -15,12 +15,12 @@ Auth Model for SQLALchemy
 class Auth(DB.BASE):
     __tablename__ = TBL_AUTH
     id = Column(Integer, primary_key=True)
-    username = Column('username', String(255), ForeignKey(f"{TBL_USERS}.username", name=f"fk_user_auth_name_{__tablename__}"), nullable=False)
+    username = Column('username', String(255), nullable=False)
     password = Column('password', String(255), nullable=False)
     UniqueConstraint(username, name='UNQIUE-authuser')
 
     # relationships
-    authUser = relationship("User", back_populates="auth")
+    # authUser = relationship("User", back_populates="auth")
 
     def __init__(self, username, password) -> None:
         self.username = username

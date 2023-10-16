@@ -6,6 +6,7 @@ import { Divider, Sheet, Typography } from '@mui/joy';
 import { PlantNumbers, CriticalPlants } from '../../components/plant/stats';
 import { useContext, useEffect, useState } from 'react';
 import { StateContext } from '../../state/context';
+import { baseUrl } from '../../utils';
 
 const DashboardScreen = () => {
     const { state, setState } = useContext(StateContext);
@@ -66,12 +67,12 @@ const MyPlants = (props: { plants: any[]}) => {
 
 const get_plant_information: (usr: string) => Promise<any[]> = async (usr: string) => {
 
-    const result = await fetch("http://127.0.0.1:3000/users/"+usr+"/plants");
+    const result = await fetch(baseUrl+"users/"+usr+"/plants");
     if (result.ok) {
         const ids = await result.json();
         // get individual plant information
         const plantInfos = await Promise.all(ids.map(async (id : any) => {
-            const req = await fetch("http://127.0.0.1:3000/plant/" + id);
+            const req = await fetch(baseUrl+"plant/" + id);
             return await req.json();
         }));
         console.log(plantInfos)

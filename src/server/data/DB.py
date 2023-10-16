@@ -9,7 +9,7 @@ import pymysql
 # potentially do dot env stuff here, but it's less important since security issues aren't in scope for DECO3801
 
 DBM = "mysql+pymysql" #"mysql"
-HST = "database" # now with docker involved. Used to be: #"localhost"
+HST = "database" # now with docker involved.
 DTB = "plants"
 USR = "root"
 PWD = "password"

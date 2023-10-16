@@ -4,6 +4,7 @@ import WarningRoundedIcon from '@mui/icons-material/WarningRounded';
 import './plant.css';
 import { useContext, useState } from 'react';
 import { StateContext } from '../../state/context';
+import { baseUrl } from '../../utils';
 
 export type PlantCardProps = {
     id: number;
@@ -92,7 +93,7 @@ const DeletePlantModal = (props: {open: boolean, setOpen: (val: boolean) => void
     formData.append('plantId', props.plantId.toString());
     props.setOpen(false)
 
-    fetch("http://127.0.0.1:3000/plants/delete", {
+    fetch(baseUrl+"plants/delete", {
         method: "DELETE",
         body: formData
       }
@@ -137,7 +138,7 @@ export const water_plant = (id: number) => {
   d.setTime(d.getTime() - (d.getTimezoneOffset() * 60000));
   formData.append('time', d.toISOString().substr(0, 19).replace("T"," "));
 
-  fetch("http://127.0.0.1:3000/activity", {
+  fetch(baseUrl+"activity", {
     method: 'POST',
     body: formData
   }).then(res => res.json().then(oo => console.log(oo)))

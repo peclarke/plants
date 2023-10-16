@@ -28,6 +28,13 @@ services:
       dockerfile: ./Dockerfile
     ports:
       - "3000:3000"
+    expose:
+      - "3000"
+    volumes:
+      - "./src/server/data:/app/data"
+      - "./src/server/endpoints:/app/endpoints"
+      - "./src/server/scripts:/app/scripts"
+      - "./src/server/utils:/app/utils"
     environment:
       - MYSQL_HOST=mysql
       - MYSQL_USER=root
@@ -39,20 +46,23 @@ services:
     networks:
       - mycelium
 
-  # nginx:
-  #   image: nginx:latest
-  #   container_name: nginx
-  #   ports:
-  #     - "80:80"
-  #   volumes:
-  #     - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-  #     - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
-  #   depends_on:
-  #     # - react-app
-  #     - flaskserver
+  nginx:
+    container_name: nginxweb
+    build:
+      context: src/web
+      dockerfile: ./Dockerfile
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - flaskserver
+    networks:
+      - mycelium
 
 volumes:
   data:
 
 networks:
   mycelium:
+    driver: bridge

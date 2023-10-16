@@ -12,3 +12,7 @@
 export const lightHighlight = "#84cbca";
 
 // const negative = Color(0xFFA25557);
+
+
+
+export const baseUrl = "http://localhost:3000/"
