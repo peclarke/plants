@@ -28,7 +28,7 @@ class Auth(DB.BASE):
 
     def check_password_match(self, password: str) -> bool:
         usrbytes = password.encode('utf-8')
-        return bcrypt.checkpw(usrbytes, self.password)
+        return bcrypt.checkpw(usrbytes, self.password.encode('utf-8'))
     
     def serialize(self):
         return {

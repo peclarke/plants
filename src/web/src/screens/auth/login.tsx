@@ -62,6 +62,11 @@ function ColorSchemeToggle({ onClick, ...props }: IconButtonProps) {
 }
 
 export default function JoySignInSideTemplate() {
+  const [email, setEmail] = React.useState("");
+  const [pass, setPass] = React.useState("");
+  const [loading, setLoading] = React.useState(false);
+
+
   return (
     <CssVarsProvider defaultMode="dark" disableTransitionOnChange>
       <CssBaseline />
@@ -181,22 +186,30 @@ export default function JoySignInSideTemplate() {
               <form
                 onSubmit={(event: React.FormEvent<SignInFormElement>) => {
                   event.preventDefault();
-                  const formElements = event.currentTarget.elements;
-                  const data = {
-                    email: formElements.email.value,
-                    password: formElements.password.value,
-                    persistent: formElements.persistent.checked,
-                  };
-                  alert(JSON.stringify(data, null, 2));
+                  setLoading(true);
+
+                  let formData = new FormData();
+                  formData.append("username", email);
+                  formData.append("password", pass);
+
+                  fetch("http://127.0.0.1:3000/auth", {
+                    method: "POST",
+                    body: formData
+                  }).then(((res: any) => res.json().then((data: any) => {
+                    // new user details
+                    console.log(data);
+                  }).finally(() => {
+                    setLoading(false);
+                  })))
                 }}
               >
                 <FormControl required>
                   <FormLabel>Email</FormLabel>
-                  <Input type="email" name="email" />
+                  <Input type="email" name="email" value={email} onChange={(event: any) => setEmail(event.target.value)}/>
                 </FormControl>
                 <FormControl required>
                   <FormLabel>Password</FormLabel>
-                  <Input type="password" name="password" />
+                  <Input type="password" name="password" value={pass} onChange={(event: any) => setPass(event.target.value)} />
                 </FormControl>
                 <Stack gap={4} sx={{ mt: 2 }}>
                   <Button type="submit" fullWidth>

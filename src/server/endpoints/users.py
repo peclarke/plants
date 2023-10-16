@@ -194,13 +194,14 @@ Add user token
 @app.route("/auth", methods=["POST"])
 @APICall
 @api_auth
-def authenticate_user(session, username: str, password: str):
+def authenticate_user(session):
     # check for password
+    usr: str = request.form["username"]
     psw: str = request.form["password"]
-    if psw is None:
-        return "Password not supplied", 400
+    if psw is None or usr is None:
+        return "Username or Password not supplied", 400
     # check for existing user
-    user: Auth = session.query(Auth).filter(Auth.username == username).first()
+    user: Auth = session.query(Auth).filter(Auth.username == usr).first()
     if user is None:
         return "Username or password incorrect", 403
     # lets play compare the password
@@ -235,9 +236,11 @@ def register_user(session):
     if userObj:
         return "User already registered", 400
     # username, email, bio=None, reputation=0, startDate=func.now()
-    user: User = User("username", usr)
     # create the new user
     newUser: Auth = Auth(usr, psw)
+    user: User = User("username", usr)
+    user.auth = newUser
+
     try:
         session.add(user)
         session.add(newUser)

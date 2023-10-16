@@ -29,7 +29,7 @@ class User(DB.BASE):
 
     userComments = relationship("Comment", back_populates="author")
 
-    auth = relationship("Auth", back_populates="authUser")
+    auth = relationship("Auth", backref="authUser")
 
     def __init__(self, username, email, bio=None, reputation=0, startDate=func.now()) -> None:
         self.username = username
