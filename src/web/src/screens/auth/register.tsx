@@ -196,7 +196,7 @@ export default function Register() {
                     method: "POST",
                     body: form
                   }).then(res => res.json().then(data => {
-
+                        console.log(data)
                     // more in here TODO
                   })).finally(() => {
 

@@ -64,7 +64,7 @@ function ColorSchemeToggle({ onClick, ...props }: IconButtonProps) {
 export default function JoySignInSideTemplate() {
   const [email, setEmail] = React.useState("");
   const [pass, setPass] = React.useState("");
-  const [loading, setLoading] = React.useState(false);
+  const [_loading, setLoading] = React.useState(false);
 
 
   return (
