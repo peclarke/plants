@@ -9,7 +9,7 @@ from data.users.token import Token
 from utils.api import APICall, api_auth
 from flask import jsonify
 
-app = Blueprint('user_endpoints', __name__)
+app = Blueprint('user_endpoints', __name__, url_prefix="/api")
 # session = DB.SESSION()
 
 # ===== Major User Endpoints ====

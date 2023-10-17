@@ -5,7 +5,7 @@ from data.plants.plant import Plant
 from utils.notification_utils import send_notif_to_user
 from utils.api import APICall, api_auth
 
-app = Blueprint("notifications", __name__)
+app = Blueprint("notifications", __name__, url_prefix="/api")
 
 @app.route('/send_watering_notifications', methods=['POST'])
 @APICall

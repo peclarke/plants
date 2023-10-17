@@ -15,4 +15,4 @@ export const lightHighlight = "#84cbca";
 
 
 
-export const baseUrl = "http://localhost:3000/"
+export const baseUrl = "api/"

@@ -5,7 +5,7 @@ import json
 from utils.api import APICall, api_auth
 from flask import jsonify
 
-app = Blueprint('forum_endpoints', __name__)
+app = Blueprint('forum_endpoints', __name__, url_prefix="/api")
 
 # ===== Major Forum Endpoints ====
 

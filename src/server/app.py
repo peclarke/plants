@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Blueprint, Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS, cross_origin
 from endpoints import get_blueprints
@@ -34,13 +34,19 @@ def create_app() -> Flask:
 
 # Initial setup
 app: Flask = create_app()
+apiBP = Blueprint("api", __name__, url_prefix='/api')
+# app.register_blueprint(apiBP, url_prefix='/api')
+
+# app.config["APPLICATION_ROUTE"] = "/api"
 
 # db: SQLAlchemy = SQLAlchemy(app)
 # db.init_app(app)
 
-@app.route("/")
+@apiBP.route("/")
 def root():
-    return "Welcome to our friendly Plants API. Check the Docs."
+    return "Welcome to our friendly Plants API. Check the Docs!!!!!"
+
+app.register_blueprint(apiBP)
 
 if __name__ == "__main__":
     # session = SESSION()

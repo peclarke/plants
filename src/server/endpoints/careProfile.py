@@ -4,7 +4,7 @@ from flask import jsonify
 
 from data import PlantCareProfile, Plant
 
-app = Blueprint('care_profile_endpoints', __name__)
+app = Blueprint('care_profile_endpoints', __name__, url_prefix="/api")
 
 '''
 Get a plant care profile from id

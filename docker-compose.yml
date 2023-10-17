@@ -28,8 +28,6 @@ services:
       dockerfile: ./Dockerfile
     ports:
       - "3000:3000"
-    expose:
-      - "3000"
     volumes:
       - "./src/server/data:/app/data"
       - "./src/server/endpoints:/app/endpoints"

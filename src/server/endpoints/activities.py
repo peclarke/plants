@@ -6,7 +6,7 @@ from flask import jsonify
 import json
 
 
-app = Blueprint('activities', __name__)
+app = Blueprint('activities', __name__, url_prefix="/api")
 
 '''
 Adds an Activity to a Plant (POST)

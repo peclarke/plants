@@ -9,7 +9,7 @@ from flask import jsonify
 import json
 
 
-app = Blueprint('plant_endpoints', __name__)
+app = Blueprint('plant_endpoints', __name__, url_prefix="/api")
 
 VERSION = '7.2.0'
 
@@ -132,6 +132,10 @@ def add_personal_plant(session):
         return "A database error occurred:", e, 400
 
     return plant.serialize(session), 200
+
+# @app.route("/api")
+# def oof():
+#     return {"a": 2}, 200
 
 '''
 Gets a PERSONAL Plant (GET)
