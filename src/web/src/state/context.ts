@@ -14,7 +14,15 @@ export type ContextType = {
 }
 
 export const initialState = {
-    username: "ldoog0",
+    username: localStorage.getItem("username") ? localStorage.getItem("username") as string : "", //"ldoog0", //ldoog0
+    userId: localStorage.getItem("userId") ? parseInt(localStorage.getItem("userId") as string) : -1,
+    plants: [],
+    loggedIn: localStorage.getItem("userId") ? true : false,
+    expiryTime: null
+}
+
+export const resetState = {
+    username: "", 
     userId: -1,
     plants: [],
     loggedIn: false,

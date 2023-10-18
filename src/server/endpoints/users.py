@@ -203,19 +203,30 @@ def authenticate_user(session):
     # check for existing user
     user: Auth = session.query(Auth).filter(Auth.username == usr).first()
     if user is None:
-        return "Username or password incorrect", 403
+        return {
+            "msg": "Username or password incorrect",
+            "code": 403
+        }
     # lets play compare the password
     match = user.check_password_match(psw)
     if match:
+        usrId = session.query(User).filter(User.username == usr).first().id
+
         userInfo = {
-            "username": user.authUser.username,
-            "startDate": user.authUser.startDate,
-            "tokenTime": str(datetime.datetime.now())
+            "username": usr,
+            "id": usrId,
+            # "startDate": user.authUser.startDate,
+            "tokenTime": str(datetime.datetime.now()),
+            "code": 200
         }
 
         return userInfo, 200
     else:
-        return "Username or password incorrect", 403
+        # return "Username or password incorrect", 403
+        return {
+            "msg": "Username or password incorrect",
+            "code": 403
+        }, 403
     
 '''
 Register new user
@@ -238,14 +249,22 @@ def register_user(session):
     # username, email, bio=None, reputation=0, startDate=func.now()
     # create the new user
     newUser: Auth = Auth(usr, psw)
-    user: User = User("username", usr)
-    user.auth = newUser
+    user: User = User(usr, usr)
+    # user.auth = newUser
 
     try:
         session.add(user)
         session.add(newUser)
         session.commit()
     except Exception as e:
-        return f"Something went wrong: {e}", 500
+        # return {Something went wrong: {e}", 500
+        return {
+            "msg": f"Something went wrong: {e}",
+            "code": 500
+        }
     
-    return "User registered successfully", 200
+    # return "User registered successfully", 200
+    return {
+        "msg": "User registered successfully",
+        "code": 200
+    }

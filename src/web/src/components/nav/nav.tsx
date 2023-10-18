@@ -6,7 +6,7 @@ import IconButton from '@mui/joy/IconButton';
 import './nav.css';
 import { useContext, useEffect, useState } from 'react';
 import InputFileUpload from '../file_input';
-import { StateContext } from '../../state/context';
+import { StateContext, resetState } from '../../state/context';
 import { baseUrl } from '../../utils';
 
 const NewPlantModal = (props: {open: boolean, setOpen: (val: boolean) => void}) => {
@@ -139,13 +139,19 @@ const NewPlantModal = (props: {open: boolean, setOpen: (val: boolean) => void}) 
 }
 
 const NavComponent = () => {
-    const { state } = useContext(StateContext);
+    const { state, setState } = useContext(StateContext);
     const [open, setOpen] = useState<boolean>(false);
     const nav = useNavigate();
 
     // don't render if not authenticated
     if (!state.loggedIn) {
         return <></>
+    }
+
+    const logout = () => {
+        setState(resetState)
+        localStorage.clear()
+        window.location.reload();
     }
 
     return (
@@ -201,7 +207,7 @@ const NavComponent = () => {
                     </MenuButton>
                     <Menu>
                         <MenuItem>Profile</MenuItem>
-                        <MenuItem>Logout</MenuItem>
+                        <MenuItem onClick={logout}>Logout</MenuItem>
                     </Menu>
                 </Dropdown>
             </section>
