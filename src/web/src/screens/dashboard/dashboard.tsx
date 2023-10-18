@@ -75,7 +75,6 @@ const get_plant_information: (usr: string) => Promise<any[]> = async (usr: strin
             const req = await fetch(baseUrl+"plant/" + id);
             return await req.json();
         }));
-        console.log(plantInfos)
         return plantInfos;
     } else {
         return [];
