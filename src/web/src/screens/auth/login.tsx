@@ -53,14 +53,13 @@ const Login = () => {
           setState({
             ...state,
             username: data.username,
-            userId: data.usrId,
+            userId: data.id,
             plants: [],
             loggedIn: true,
             expiryTime: data.tokenTime // ideally plus something but uh
           })
-          
           localStorage.setItem("username", data.username);
-          localStorage.setItem("userId", data.userId);
+          localStorage.setItem("userId", data.id);
           localStorage.setItem("expiryTime", data.tokenTime);
 
         }).finally(() => {

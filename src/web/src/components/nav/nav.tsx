@@ -54,7 +54,7 @@ const NewPlantModal = (props: {open: boolean, setOpen: (val: boolean) => void}) 
                 let formData = new FormData();
                 formData.append('personalName', form.personal);
                 formData.append('desc', form.desc);
-                formData.append('userId', "1"); // TODO TAKE FROM STATE
+                formData.append('userId', state.userId.toString());
                 formData.append('plantTypeId', form.type.id)
                 
                 fetch(baseUrl+"plant", {
