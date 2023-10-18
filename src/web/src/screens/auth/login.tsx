@@ -50,6 +50,7 @@ const Login = () => {
           body: formData
         }).then(((res: any) => res.json().then((data: any) => {
           // new user details
+          if (data.code !== 200) return;
           setState({
             ...state,
             username: data.username,

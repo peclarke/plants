@@ -20,7 +20,7 @@ const Register = () => {
     }}>
     <Stack gap={4} sx={{ mb: 2 }}>
     <Stack gap={1}>
-      <Typography level="h3">Sign in</Typography>
+      <Typography level="h3">Sign Up</Typography>
       <Typography level="body-sm">
         Already have an account?{' '}
         <Link href="/" level="title-sm">
